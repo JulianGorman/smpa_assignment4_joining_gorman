@@ -108,7 +108,7 @@ Using the joined table you made above:
 Now using the joined datasets above, come up with two groupings you find interesting or newsworthy in a particular state, and replicate the steps above them them instead.
 
 5)  
-
+Found the mean percentage of votes for Trump in the 2020 election in counties by percentage of foreign born people in comparison to the national average.
 ```{r}
 
   inner_join(counties_elexresults, counties_demographics, by = "pct_r_2020") %>% 
@@ -119,10 +119,11 @@ Now using the joined datasets above, come up with two groupings you find interes
 ```
 
 6)  
-
+Found the count of counties won by Democrats and Republicans grouped by the nonwhite percentage in comparison to the national average.
 ```{r}
 
-
+inner_join(counties_elexresults, counties_demographics, by = "geoid") %>% group_by(pct_race_nonwhite_abovebelow_natl) %>% 
+  count(winner_2020) 
 
 
 
