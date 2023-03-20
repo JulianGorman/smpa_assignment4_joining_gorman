@@ -42,6 +42,11 @@ Join together the election results and urban/suburban/rural tables above, and th
 ```{r}
 
 
+counties_rural_urban_suburban %>% 
+filter(state_code == "VA") %>% 
+inner_join(counties_elexresults, counties_rural_urban_suburban, by = "geoid") %>%
+    group_by(rural_urban) %>%
+  summarise_at(vars(pct_r_2020), list(pct_r = mean))
 
 
 ```
@@ -56,8 +61,10 @@ Using the joined election results / urban/suburban/rural table created above:
 
 ```{r}
 
-
-
+counties_rural_urban_suburban %>% 
+filter(state_code == "VA") %>% 
+inner_join(counties_elexresults, counties_rural_urban_suburban, by = "geoid") %>% group_by(rural_urban) %>% 
+  count(winner_2020) 
 
 ```
 
@@ -71,8 +78,13 @@ Join together the election results and demographics tables above, and then use t
 
 ```{r}
 
+ counties_demographics %>% 
+  filter(state_code == "FL") %>% 
+  inner_join(counties_elexresults, counties_demographics, by = "pct_r_2020") %>%
+  group_by(pct_ed_college_all_abovebelow_natl) %>% 
+  summarise_at(vars(pct_r_2020), list(pct_r = mean)) 
 
-
+  
 
 ```
 
@@ -86,7 +98,9 @@ Using the joined table you made above:
 
 ```{r}
 
-
+  inner_join(counties_elexresults, counties_demographics, by = "pct_r_2020") %>%
+  group_by(pct_ed_college_all_abovebelow_natl) %>% 
+  summarise_at(vars(pct_r_2020), list(pct_r = mean)) 
 
 
 ```
@@ -97,7 +111,9 @@ Now using the joined datasets above, come up with two groupings you find interes
 
 ```{r}
 
-
+  inner_join(counties_elexresults, counties_demographics, by = "pct_r_2020") %>% 
+  group_by(pct_born_foreign_abovebelow_natl) %>% 
+  summarise_at(vars(pct_r_2020), list(pct_r = mean)) 
 
 
 ```
